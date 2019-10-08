@@ -7,7 +7,7 @@ let app = express();
 let db; 
 //evil js script
 //<a href="#" onclick='(()=>{alert("Evil JS here")})()'>Click this</a>
-let port process.env.PORT;
+let port = process.env.PORT;
 if(port == null || port == ""){
     port = 3000;
 }
