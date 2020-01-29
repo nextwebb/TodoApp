@@ -9,18 +9,18 @@ let db;
 //<a href="#" onclick='(()=>{alert("Evil JS here")})()'>Click this</a>
 let port = process.env.PORT;
 if(port == null || port == ""){
-    port = 3000;
+    port = 4000;
 }
-app.use(express.static("public"));
+
 
 let connectionString = "mongodb+srv://todoAppUse101:P@55xyz)@cluster0-seuxi.mongodb.net/TodoApp?retryWrites=true&w=majority";
-mongodb.connect(connectionString,{useNewUrlParser: true}, (err, client)=>{
+mongodb.connect(connectionString,{ useUnifiedTopology: true, useNewUrlParser: true}, (err, client)=>{
     // This anonymous function auto runs and mutates the variable "db", upon connection
     db = client.db();//select db
     app.listen(port);// only upon connection should you listen to this port
     console.log(`Listening on port ${port}`);
 });
-
+app.use(express.static("public"));
 app.use(express.json());//Asynchronous request
 app.use(express.urlencoded({extended: false}));
 
@@ -35,10 +35,10 @@ if(req.headers.authorization == "Basic bmV4dHdlYmI6bmV4dHdlYmJAbWU="){
 }
 }
 
-app.use(passwordProtected)
+//app.use(passwordProtected)
 //this tells express to add the function as our first arguement in all our routes
 
-app.get("/", passwordProtected, (req, res)=>{
+app.get("/", (req, res)=>{
   db.collection("items").find().toArray((err, items)=>{
 
     res.send(
