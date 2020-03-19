@@ -1,3 +1,20 @@
+
+
+axios.get('/data')
+  .then(function (response) {
+    // handle success
+     ourHTML = response.data.map((item)=>{
+      return itemTemplate(item)
+    }).join('');
+
+
+document.getElementById("item-list").insertAdjacentHTML('beforeend',ourHTML);
+    
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
 function itemTemplate(item) {
   return `<li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
               <span class="item-text">${item.text}</span>
@@ -8,12 +25,7 @@ function itemTemplate(item) {
             </li>`
 }
 
-// Initial Page Load Render
-let ourHTML = items.map((item)=>{
-  return itemTemplate(item)
-}).join('');
 
-document.getElementById("item-list").insertAdjacentHTML('beforeend',ourHTML);
 
 
 // Create Feature
